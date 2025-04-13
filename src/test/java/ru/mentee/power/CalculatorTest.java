@@ -2,6 +2,8 @@ package ru.mentee.power;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Тесты калькулятора")
@@ -45,21 +47,8 @@ class CalculatorTest {
     @Test
     @DisplayName("Тест деления на ноль")
     void testDivideByZero() {
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
-            int result = 5 / 0;
-        });
-
-        assertEquals("/ by zero", exception.getMessage());
-        // 🤔 Вопрос: Что произойдет, если разделить на ноль?
-        // Давайте попробуем это проверить!
-
-        // Шаг 1: Создайте переменную типа Exception, которая будет хранить пойманное исключение
-
-        // Шаг 2: Используйте метод assertThrows для проверки, что вызов calculator.divide(5, 0)
-        // выбрасывает исключение ArithmeticException
-        // Подсказка: assertThrows возвращает исключение, которое было выброшено
-
-        // Шаг 3: Проверьте, что сообщение в исключении содержит текст "Деление на ноль"
-        // Подсказка: используйте метод assertEquals для сравнения строк
+        assertThatThrownBy(() -> calculator.divide(5, 0))
+                .isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("Деление на ноль");
     }
 }
